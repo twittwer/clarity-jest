@@ -37,7 +37,12 @@
     "@angular/platform-browser": "^11.2.0",
     "@angular/platform-browser-dynamic": "^11.2.0",
     "@angular/router": "^11.2.0",
+    "@cds/core": "^5.0.2",
+    "@clr/angular": "^5.0.2",
+    "@clr/icons": "^5.0.2",
+    "@clr/ui": "^5.0.2",
     "@nrwl/angular": "11.4.0",
+    "@webcomponents/webcomponentsjs": "^2.5.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "^0.10.2"
