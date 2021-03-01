@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "clarity-jest",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "css"
+    }
+  },
+  "projects": {
+    "clarity-jest": {
+      "projectType": "application",
+      "root": "apps/clarity-jest",
+      "sourceRoot": "apps/clarity-jest/src",
+      "prefix": "clarity-jest",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/clarity-jest",
+            "index": "apps/clarity-jest/src/index.html",
+            "main": "apps/clarity-jest/src/main.ts",
+            "polyfills": "apps/clarity-jest/src/polyfills.ts",
+            "tsConfig": "apps/clarity-jest/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/clarity-jest/src/favicon.ico",
+              "apps/clarity-jest/src/assets"
+            ],
+            "styles": ["apps/clarity-jest/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/clarity-jest/src/environments/environment.ts",
+                  "with": "apps/clarity-jest/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "clarity-jest:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "clarity-jest:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "clarity-jest:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/clarity-jest/src/**/*.ts",
+              "apps/clarity-jest/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/clarity-jest"],
+          "options": {
+            "jestConfig": "apps/clarity-jest/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "clarity-jest-e2e": {
+      "root": "apps/clarity-jest-e2e",
+      "sourceRoot": "apps/clarity-jest-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/clarity-jest-e2e/cypress.json",
+            "tsConfig": "apps/clarity-jest-e2e/tsconfig.e2e.json",
+            "devServerTarget": "clarity-jest:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "clarity-jest:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/clarity-jest-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
